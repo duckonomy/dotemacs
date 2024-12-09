@@ -1,0 +1,219 @@
+# https://github.com/msjang/md2hml (make org mode version lel)
+* Thoughts on Ditching Emacs and Lsp-bridge: The future of Emacs
+** Frontend development \rightarrow emacs sucks as fuck because of
+https://gist.github.com/gsj987/64d48bf49a374c96421ad20df886e947
+https://github.com/akirak/twind.el (just use this for now?) \rightarrow seems pretty ok
+https://www.reddit.com/r/emacs/comments/16zkkr0/am_having_difficulty_while_setting_lsp_with/
+** Just found out about lsp-bridge and acm-mode today
+** The future of Emacs is external until internal catches up (maybe never? lmao)
+When emacs is slow, deferring to external resources is much simpler
+Multi-threaded eshell is next lmao (in python)
+
+With these megaliths, we should expand on writing smaller compatibility tools for the ecosystem.
+Rather than lsp-java handling everything java, it should defer tasks. E.g. sts4.
+Structural editing/Code-refactoring using tree-sitter. (like puni but butter)
+** Caveat: Use Emacsisms when available and usable
+Things like
+1. Occur
+2. Hyperbole, Embark, Marginalia, Consult, and it is not okay
+3. Capf is not an emacism but a mistake lmao
+4. Org mode, org-capture
+5. .xref-go-to-definition
+6. Minibuffer when you can lmao
+7. Ispell flyspell
+   https://www.masteringemacs.org/article/highlighting-by-word-line-regexp
+** Big things in programming
+Dired
+
+*Lsp* should just
+1. go to code definitions
+2. give auto complete
+3. give diagnostics
+4. Formatting? \rightarrow really? I feel like other things would do better
+5. Rename and find
+6. Symbols (like search imenu)
+7. Good indexed search (rather than rg all the time)
+   https://github.com/manateelazycat/lsp-bridge/issues/884
+*Dap* should do debugging (TODO)
+1.Yeah I should implement something like lsp-bridge for this
+
+*Treesitter* should
+1. Handle refactoring
+2. Honestly handle formatting (or even a third party)
+
+*Project Initializers* and *runners* (i.e. integration with native language tooling)
+1. Sts4 for emacs
+
+** Use features that are emacs-native
+** For fun
+Mockery of gnus by making a multi-threaded gnus.
+** Maintenence cost of these things?
+https://github.com/blahgeek/emacs-lsp-booster/issues/9
+* Book mode?
+https://github.com/rougier/book-mode
+* Emacs projects
+** Gnus-RS (shim)
+** ERC-RS? meh
+** java-ts-goodies
+*** Need things like things rather than in core
+** C-h everything (auto-generate docs based-off HTML in elisp hehe or haskell?? or rust? idk some language that's fun like a pandoc)
+https://github.com/blahgeek/emacs-devdocs-browser?tab=readme-ov-file
+textinfo and pandoc kinda does this?
+** DAP shim (like lsp-booster or lsp-bridge)
+** ACM independent (make acm-complete a standalone for better maintenence)
+https://manateelazycat.github.io/2022/06/26/why-lsp-bridge-not-use-capf/
+* Learning Built-in Emacs Editing (disable multi-cursor lmao)
+1. Regexp
+   https://protesilaos.com/codelog/2020-01-23-emacs-regexp-primer/
+2. Isearch/query-replace regexp and recursive edits
+   https://protesilaos.com/codelog/2020-01-23-emacs-regexp-primer/
+3. kbd-macro-query when defining a macro
+4. Occur and multi-occur & occur-edit-mode
+5. wdired
+6. wgrep
+7. wgnus
+8. wproced
+9. wpdf-tools
+10. weww
+11. xref, xref-buffer
+12. Hyperbole
+13. Completion-at-point... \rightarrow needs replacement lol (company for now)
+14. dired
+15. Mark/registers
+16. Skeleton/tempo
+17. built-in tree-sitter
+18. eglot
+19. narrow
+* Simple emacs themes
+https://github.com/anler/white-theme.el
+
+https://github.com/smallwat3r/emacs-simplicity-theme
+
+https://github.com/fgeller/basic-theme.el
+
+https://github.com/masar3141/mono-jade
+
+https://github.com/bettervim/yugen.nvim
+
+https://vimcolorschemes.com/slugbyte/lackluster.nvim
+
+https://vimcolorschemes.com/rektrex/micro.vim
+
+https://vimcolorschemes.com/vyshane/cleanroom-vim-color
+
+https://github.com/seesleestak/duo-mini
+
+https://github.com/nikolvs/vim-sunbather
+
+https://github.com/kxzk/skull-vim
+
+https://github.com/rfunix/vim-greenisgood
+
+https://cosine.blue/projects.html aircon-theme
+
+https://github.com/maio/eink-emacs
+
+https://github.com/jaredgorski/nothing.el?tab=readme-ov-file
+
+https://github.com/vbuzin/berrys-theme
+
+https://github.com/emacsfodder/emacs-purple-haze-theme
+berrys
+distinguished
+kanagawa
+sorcery
+purple-haze
+no-clown-fiesta
+https://github.com/motform/stimmung-themes
+https://github.com/Lokaltog/distinguished-theme
+#+begin_src emacs-lisp
+(dolist (f '(font-lock-builtin-face
+             font-lock-preprocessor-face
+             font-lock-constant-face
+             font-lock-negation-char-face
+             font-lock-constant-face
+             font-lock-doc-face
+             font-lock-function-name-face
+             font-lock-keyword-face
+             font-lock-string-face
+             font-lock-type-face
+             font-lock-variable-name-face
+             font-lock-warning-face
+             racket-selfeval-face
+             racket-keyword-argument-face
+             sh-heredoc
+             sh-quoted-exec))
+  (custom-set-faces `(,f ((((type graphic) (class color) (background light)) :inhert default)))))
+#+end_src
+
+* Re-builder
+https://karthinks.com/software/bridging-islands-in-emacs-1/
+#+begin_src emacs-lisp
+(defvar my/re-builder-positions nil
+  "Store point and region bounds before calling re-builder")
+(advice-add 're-builder
+            :before
+            (defun my/re-builder-save-state (&rest _)
+              "Save into `my/re-builder-positions' the point and region
+  positions before calling `re-builder'."
+              (setq my/re-builder-positions
+                    (cons (point)
+                          (when (region-active-p)
+                            (list (region-beginning)
+                                  (region-end)))))))
+(defun reb-replace-regexp (&optional delimited)
+  "Run `query-replace-regexp' with the contents of re-builder. With
+  non-nil optional argument DELIMITED, only replace matches
+  surrounded by word boundaries."
+  (interactive "P")
+  (reb-update-regexp)
+  (let* ((re (reb-target-value 'reb-regexp))
+         (replacement (query-replace-read-to
+                       re
+                       (concat "Query replace"
+                               (if current-prefix-arg
+                                   (if (eq current-prefix-arg '-) " backward" " word")
+                                 "")
+                               " regexp"
+                               (if (with-selected-window reb-target-window
+                                     (region-active-p)) " in region" ""))
+                       t))
+         (pnt (car my/re-builder-positions))
+         (beg (cadr my/re-builder-positions))
+         (end (caddr my/re-builder-positions)))
+    (with-selected-window reb-target-window
+      (goto-char pnt) ; replace with (goto-char (match-beginning 0)) if you want
+                                        ; to control where in the buffer the replacement starts
+                                        ; with re-builder
+      (setq my/re-builder-positions nil)
+      (reb-quit)
+      (query-replace-regexp re replacement delimited beg end))))
+
+(define-key reb-mode-map (kbd "RET") #'reb-replace-regexp)
+(define-key reb-lisp-mode-map (kbd "RET") #'reb-replace-regexp)
+(global-set-key (kbd "C-M-%") #'re-builder)
+#+end_src
+* Replacing multi-cursors
+ - cua-selection
+ - iedit
+ - macros
+* Speedbar dirvish? \rightarrow attempt to glue speedbar and dired replacing any need for external packages
+* Newsticker for elfeed
+* Window management
+https://karthinks.com/software/emacs-window-management-almanac/
+* Repeat mode
+https://karthinks.com/software/persistent-prefix-keymaps-in-emacs/
+* STructural editing
+https://karthinks.com/software/a-consistent-structural-editing-interface/
+* Iedit
+https://www.youtube.com/watch?v=tZh6ueo9pKk
+* Emacs GUD debugger
+* Hyperbole
+https://www.youtube.com/watch?v=BysjfL25Nlc
+* Misc
+https://simondobson.org/2010/05/14/cs-book-worth-reading-twice/
+https://github.com/mkirchner/linked-list-good-taste
+* Database
+https://www.youtube.com/watch?v=mQGhm79f8TY
+* Learn emacs lisp
+https://www.youtube.com/watch?v=NocDm4zzToo
