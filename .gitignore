@@ -20,3 +20,5 @@ projects
 templates
 emacs-lsp-booster/*
 places
+todo.org
+snip.el
