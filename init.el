@@ -111,6 +111,18 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
   (define-key input-decode-map (kbd "C-m") (kbd "<C-m>"))
   (define-key input-decode-map [?\C-i] [C-i])
   (define-key input-decode-map [?\C-\S-i] [C-S-i])
+  (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+  (global-set-key [escape] 'keyboard-quit)
+
+  (defadvice keyboard-escape-quit
+      (around keyboard-escape-quit-dont-close-windows activate)
+    (let ((buffer-quit-function (lambda () ())))
+      ad-do-it))
+
 
   (setq default-input-method "korean-hangul")
   (global-set-key (kbd "<C-[>") 'toggle-input-method)
