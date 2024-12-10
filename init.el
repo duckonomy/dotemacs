@@ -110,7 +110,13 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
   (define-key input-decode-map (kbd "C-i") (kbd "<C-i>"))
   (define-key input-decode-map (kbd "C-m") (kbd "<C-m>"))
   (define-key input-decode-map [?\C-i] [C-i])
-  (define-key input-decode-map [?\C-\S-i] [C-S-i]))
+  (define-key input-decode-map [?\C-\S-i] [C-S-i])
+
+  (setq default-input-method "korean-hangul")
+  (global-set-key (kbd "<C-[>") 'toggle-input-method)
+  )
+
+
 
 (if (daemonp)
     (progn

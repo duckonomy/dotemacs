@@ -1,8 +1,8 @@
-(use-package vim-tab-bar
-  :ensure t
-  :commands vim-tab-bar-mode
-  :init
-  (vim-tab-bar-mode 1))
+;; (use-package vim-tab-bar
+;;   :ensure t
+;;   :commands vim-tab-bar-mode
+;;   :init
+;;   (vim-tab-bar-mode 1))
 
 (use-package doom-themes
   :ensure t)
@@ -48,45 +48,18 @@
   (minions-mode 1))
 
 (use-package mood-line
-  :ensure t)
+  :ensure t
+  :config
+  (mood-line-mode))
 
-;; (use-package moody
-;;   :ensure t
-;;   :config
-;;   (setq x-underline-at-descent-line t)
-
-;;   (set-face-attribute 'mode-line nil :box nil)
-;;   (set-face-attribute 'mode-line-inactive nil :box nil)
-;;   (set-face-attribute 'mode-line nil :overline "#444444")
-;;   (set-face-attribute 'mode-line nil :underline `(:color "#444444" :position t))
-
-;;   (set-face-attribute 'mode-line-inactive nil :overline "#444444")
-;;   (set-face-attribute 'mode-line-inactive nil :underline `(:color "#444444" :position t))
-
-;;   (moody-replace-mode-line-front-space)
-;;   (moody-replace-mode-line-buffer-identification)
-;;   (moody-replace-mode-line-front-space)
-;;   (moody-replace-eldoc-minibuffer-message-function)
-
-;; (set-face-attribute 'mode-line-inactive nil :box nil)
-
-;;   (moody-replace-vc-mode)
-;;   (advice-add 'vc-git-mode-line-string
-;;               :filter-return
-;;               (lambda (arg) (substring arg 4))))
-
-
-;; (use-package ligature
-;;   :ensure t
-;;   :config
-;;   ;; Enable all Iosevka ligatures in programming modes
-;;   (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
-;;                                        "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
-;;                                        "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
-;;                                        ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
-;;   ;; Enables ligature checks globally in all buffers. You can also do it
-;;   ;; per mode with `ligature-mode'.
-;;   (global-ligature-mode t))
-
+(use-package ligature
+  :ensure t
+  :config
+  ;; Enable all Iosevka ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
+                                       "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
+                                       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
+                                       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+  (global-ligature-mode t))
 
 (provide 'appearance)

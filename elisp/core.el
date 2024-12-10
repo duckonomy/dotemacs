@@ -311,13 +311,17 @@
    ("C-x M-h" . windmove-left)
    ("C-x M-l" . windmove-right)))
 
-;; (use-package tab-bar
-;;   :ensure nil
-;;   :config
-;;   (setq tab-bar-close-button-show nil)
-;;   (setq tab-bar-new-button-show nil)
-;;   (setq tab-bar-position nil)
-;;   (setq tab-line-close-button-show nil)
-;;   (setq tab-line-new-button-show nil))
+(use-package tab-bar
+  :ensure nil
+  :config
+  (add-to-list 'tab-bar-format 'tab-bar-format-align-right t)
+  (add-to-list 'tab-bar-format 'tab-bar-format-global t)
+  ;; (setq tab-bar-close-button-show nil)
+  ;; (setq tab-bar-new-button-show nil)
+  ;; (setq tab-bar-position nil)
+  ;; (setq tab-line-close-button-show nil)
+  ;; (setq tab-line-new-button-show nil)
+  (tab-bar-mode t)
+)
 
 (provide 'core)
