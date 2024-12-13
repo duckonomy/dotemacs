@@ -11,7 +11,7 @@
 Set DEBUG=1 in the command line or use --debug-init to enable this.")
 
 ;; (setq-default debug-on-error (and (not noninteractive) emacs-debug-mode))
-;; (setq warning-minimum-level :emergency)
+(setq warning-minimum-level :emergency)
 
 
 
@@ -84,7 +84,7 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
 
 (set-face-attribute 'default nil
 		    :weight 'normal
-		    :height 120
+		    :height 150
 		    :slant 'normal
 		    :family "Iosevka")
 (set-face-attribute 'variable-pitch nil
@@ -127,7 +127,6 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
   (setq default-input-method "korean-hangul")
   (global-set-key (kbd "<C-[>") 'toggle-input-method)
   )
-
 
 
 (if (daemonp)

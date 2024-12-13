@@ -13,7 +13,7 @@
   (defun my/load-theme (theme)
     (my/disable-themes)
     (load-theme theme :no-confirm))
-
+  
   (defun my/light-theme ()
     (interactive)
     (my/load-theme 'mindre)))

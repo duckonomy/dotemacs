@@ -12,6 +12,7 @@ Multi-threaded eshell is next lmao (in python)
 With these megaliths, we should expand on writing smaller compatibility tools for the ecosystem.
 Rather than lsp-java handling everything java, it should defer tasks. E.g. sts4.
 Structural editing/Code-refactoring using tree-sitter. (like puni but butter)
+** Important web-component
 ** Caveat: Use Emacsisms when available and usable
 Things like
 1. Occur

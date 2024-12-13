@@ -1,6 +1,6 @@
 (use-package yasnippet
   :ensure t
-  :init
+  :config
   (yas-global-mode 1))
 
 

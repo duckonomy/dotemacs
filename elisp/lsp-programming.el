@@ -12,8 +12,7 @@
   (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
-  ;; (global-treesit-auto-mode)
-)
+  (global-treesit-auto-mode))
 
 (use-package consult-eglot
   :ensure t
@@ -117,5 +116,13 @@
              )
             )))
   (define-key astro-ts-mode-map (kbd "M-;") #'astro-ts-comment-dwim))
+
+
+(use-package envrc
+  :ensure t
+  :init
+  (envrc-global-mode))
+
+
 
 (provide 'lsp-programming)
