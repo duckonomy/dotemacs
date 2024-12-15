@@ -4,16 +4,15 @@
 ;;   :init
 ;;   (vim-tab-bar-mode 1))
 
-(use-package doom-themes
-  :ensure t)
-
+;; (use-package doom-themes
+;;   :ensure t)
 (use-package mindre-theme
   :ensure t
   :preface
   (defun my/load-theme (theme)
     (my/disable-themes)
     (load-theme theme :no-confirm))
-  
+
   (defun my/light-theme ()
     (interactive)
     (my/load-theme 'mindre)))

@@ -292,4 +292,19 @@
   (setq org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-setup))
 
+(use-package ox-extra
+  :after org
+  :config
+  (ox-extras-activate '(latex-header-blocks ignore-headlines))
+  (setq org-latex-pdf-process
+        '("pdflatex -interaction nonstopmode -output-directory %o %f"
+          "bibtex %b"
+          "pdflatex -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -interaction nonstopmode -output-directory %o %f"))
+  (setq org-latex-with-hyperref nil)
+  (setq org-latex-logfiles-extensions
+        (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf" "acn" "acr" "alg" "glg" "gls" "ist")))
+  (unless (boundp 'org-latex-classes)
+    (setq org-latex-classes nil)))
+
 (provide 'org-settings)

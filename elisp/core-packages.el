@@ -272,4 +272,9 @@
   (setq which-key-prefix-prefix "+" )
   (which-key-mode t))
 
+(use-package desktop
+  :ensure nil
+  :init
+  (desktop-save-mode 1))
+
 (provide 'core-packages)
