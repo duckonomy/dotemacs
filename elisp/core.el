@@ -21,9 +21,10 @@
   (setq-default redisplay-dont-pause t)
   (setq-default display-line-numbers-width nil)
   (setq truncate-lines t)
-  (setq tab-width 4)
+  (setq-default tab-width 4)
   (setq-default javascript-indent-level 2)
   (setq-default js-indent-level 2)
+  (setq-default go-ts-mode-indent-offset)
   (setq-default js2-basic-offset 2)
   (setq-default web-mode-markup-indent-offset 2)
   (setq-default web-mode-css-indent-offset 2)
@@ -52,16 +53,16 @@
   (setq uniquify-buffer-name-style 'forward)
   (setq indicate-buffer-boundaries nil)
   (setq frame-title-format
-	'(buffer-file-name "%f"
-	 		   (dired-directory dired-directory "%b")))
+	    '(buffer-file-name "%f"
+	 		               (dired-directory dired-directory "%b")))
   (setq-default
    fringe-indicator-alist
    (delq (assq 'continuation fringe-indicator-alist)
-	 fringe-indicator-alist))
+	     fringe-indicator-alist))
   (setq-default
    default-frame-alist
    '((horizontal-scroll-bars . nil)
-     (internal-border-width . 20)
+     (internal-border-width . 0)
      (left-fringe . 0)
      (right-fringe . 0)
      (bottom-divider-width . 0)
@@ -98,15 +99,15 @@
   :ensure nil
   :hook
   ((text-mode . (lambda ()
-	 	  (setq truncate-lines nil
-	 	        global-visual-line-mode t
+	 	          (setq truncate-lines nil
+	 	                global-visual-line-mode t
                         global-visual-wrap-prefix-mode t
-	 	        word-wrap t)))
+	 	                word-wrap t)))
    (prog-mode . (lambda ()
-	 	  (setq truncate-lines t
-	 	        global-visual-line-mode nil
+	 	          (setq truncate-lines t
+	 	                global-visual-line-mode nil
                         global-visual-wrap-prefix-mode nil
-	 	        word-wrap nil)))))
+	 	                word-wrap nil)))))
 
 (use-package window
   :ensure nil
@@ -206,17 +207,17 @@
   (minibuffer-setup . cursor-intangible-mode)
   :config
   (mapc (lambda (x)
-	  (add-to-list 'completion-ignored-extensions x))
-	'(".aux" ".bbl" ".blg" ".exe"
-	  ".log" ".meta" ".out" ".pdf"
-	  ".synctex.gz" ".tdo" ".toc"
-	  "-pkg.el" "-autoloads.el"
-	  "Notes.bib" "auto/"
-	  ".o" ".elc" "~" ".bin"
-	  ".class" ".exe" ".ps"
-	  ".abs" ".mx" ".~jv" ".rbc"
-	  ".pyc" ".beam" ".aux" ".out"
-	  ".pdf" ".hbc"))
+	      (add-to-list 'completion-ignored-extensions x))
+	    '(".aux" ".bbl" ".blg" ".exe"
+	      ".log" ".meta" ".out" ".pdf"
+	      ".synctex.gz" ".tdo" ".toc"
+	      "-pkg.el" "-autoloads.el"
+	      "Notes.bib" "auto/"
+	      ".o" ".elc" "~" ".bin"
+	      ".class" ".exe" ".ps"
+	      ".abs" ".mx" ".~jv" ".rbc"
+	      ".pyc" ".beam" ".aux" ".out"
+	      ".pdf" ".hbc"))
   (defun stealthily (fn &rest args)
     "Apply FN to ARGS while inhibiting modification hooks."
     (let ((inhibit-modification-hooks t))
@@ -262,9 +263,9 @@
   (setq-default cache-long-line-scans t)
   (setq view-read-only t)
   (setq backup-directory-alist
- 	`((".*" . ,temporary-file-directory)))
+ 	    `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
- 	`((".*" ,temporary-file-directory t)))
+ 	    `((".*" ,temporary-file-directory t)))
   (setq backup-by-copying t)
   (setq confirm-kill-emacs nil)
   (setq create-lockfiles nil)
@@ -279,8 +280,8 @@
   (savehist-mode 1)
   :config
   (setq savehist-additional-variables '(search ring regexp-search-ring)
-	savehist-autosave-interval 60
-	savehist-save-minibuffer-history t))
+	    savehist-autosave-interval 60
+	    savehist-save-minibuffer-history t))
 
 (use-package novice
   :ensure nil
@@ -314,14 +315,158 @@
 (use-package tab-bar
   :ensure nil
   :config
+
+  ;; No padding to margins
+  (setq tab-bar-auto-width nil)
+  (setq tab-bar-button-show nil)
+  (setq tab-bar-new-button-show nil)
+  (setq tab-bar-close-button-show nil)
+  (setq tab-bar-separator "")
   (add-to-list 'tab-bar-format 'tab-bar-format-align-right t)
   (add-to-list 'tab-bar-format 'tab-bar-format-global t)
-  ;; (setq tab-bar-close-button-show nil)
-  ;; (setq tab-bar-new-button-show nil)
-  ;; (setq tab-bar-position nil)
-  ;; (setq tab-line-close-button-show nil)
-  ;; (setq tab-line-new-button-show nil)
+  ;; tab-bar-tab-name-function
+  ;; ok so I got it up to here
+
+  ;; (eval-when-compile
+  ;;   (declare-function mood-line--get-glyph "mood-line"))
+
+  ;; -------------------------------------------------------------------------- ;;
+  ;;
+  ;; Helper functions
+  ;;
+  ;; -------------------------------------------------------------------------- ;;
+
+  (defun mood-line-segment-vc--rev (vc-mode-str backend)
+    "Return name of current file's revision for BACKEND according to `vc-mode'.
+VC-MODE-STR is expected to be the value of `vc-mode' in the current buffer.
+If `vc-display-status' is nil, return the name of BACKEND."
+    (or (unless vc-display-status
+          (symbol-name backend))
+        (pcase backend
+          ('Git (substring-no-properties vc-mode-str 5))
+          ('Hg (substring-no-properties vc-mode-str 4)))
+        (ignore-errors
+          (substring (vc-working-revision buffer-file-name backend) 0 7))
+        "???"))
+
+  ;; -------------------------------------------------------------------------- ;;
+  ;;
+  ;; VC segment
+  ;;
+  ;; -------------------------------------------------------------------------- ;;
+
+  (defvar-local tabbing-segment-vc--text nil
+    "Mode line segment string indicating the current state of `vc-mode'.")
+
+  (defun tabbing-segment-vc--update (&rest _args)
+    "Update `tabbing-segment-vc--text' against the current VCS state."
+    (setq tabbing-segment-vc--text
+          (when-let* ((vc-active (and vc-mode buffer-file-name))
+                      (backend (vc-backend buffer-file-name))
+                      (state (vc-state buffer-file-name))
+                      (rev (tabbing-segment-vc--rev vc-mode backend)))
+            (cond
+             ((memq state '(edited added))
+              (format #("%s %s"
+                        0 2 (face font-lock-keyword-face))
+                      "+"
+                      rev))
+             ((eq state 'needs-merge)
+              (format #("%s %s"
+                        0 2 (face warning))
+                      "-"
+                      rev))
+             ((eq state 'needs-update)
+              (format #("%s %s"
+                        0 2 (face warning))
+                      "?"
+                      rev))
+             ((memq state '(removed conflict unregistered))
+              (format #("%s %s"
+                        0 2 (face error))
+                      "!"
+                      rev))
+             (t
+              (format #("%s %s"
+                        0 5 (face shadow))
+                      "*"
+                      rev))))))
+
+
+  ;; org clocking
+
+  ;; Format tab-bar-format-global so that it also includes
+  ;; vc/line-position/flycheck/encoding/spacing/major mode/project
+  ;; Use following as reference to have
+  ;; https://github.com/amno1/global-mode-line
+  ;; And then format tab-line to only have current tab name
+  ;; and disable mode-line
+  ;; (setq-default mode-line-format nil)
+  ;; move everything to top actually wtf (can't get rid of minibuffer)
+  ;; and disable mode-line entirely
+  ;; and
+
+
+  (setq tab-bar-close-button-show nil)
+  (setq tab-bar-new-button-show nil)
+  (setq tab-bar-position nil)
+  (setq tab-line-close-button-show nil)
+  (setq tab-line-new-button-show nil)
   (tab-bar-mode t)
-)
+
+  (defun tab-bar-tab-name-current ()
+    " • ")
+
+  (defun tab-bar-format-global ()
+    ;; (format-mode-line `(,minions-mode-line-modes ,mode-line-position global-mode-string ,project-mode-line-format vc-mode ,mode-line-misc-info)))
+    (format-mode-line `(,minions-mode-line-modes vc-mode global-mode-string)))
+
+  (force-mode-line-update)
+
+  (display-battery-mode 1)
+  (setq display-time-format "%H:%M")
+  (setq display-time-world-timer-enable nil)
+
+  (setq display-time-format "%a  %b %d  %I:%M %p ")
+  (setq display-time-default-load-average nil)
+  (setq display-time-24hr-format t)
+
+  (display-time)
+  (timeclock-mode-line-display 1)
+  (add-hook 'post-command-hook #'force-mode-line-update)
+
+  (setq-default mode-line-format '("%e" mode-line-front-space
+                                   (:propertize
+                                    ("" mode-line-mule-info mode-line-client mode-line-modified
+                                     mode-line-remote mode-line-window-dedicated)
+                                    display (min-width (6.0)))
+                                   mode-line-frame-identification mode-line-buffer-identification (project-mode-line project-mode-line-format)
+                                   mode-line-format-right-align
+                                   mode-line-position
+                                   mode-line-end-spaces))
+
+
+  ;; ("%e" mode-line-front-space
+  ;;  (:propertize
+  ;;   ("" mode-line-mule-info mode-line-client mode-line-modified
+  ;;    mode-line-remote mode-line-window-dedicated)
+  ;;   display (min-width (6.0)))
+  ;;  mode-line-frame-identification mode-line-buffer-identification "   "
+  ;;  mode-line-position (project-mode-line project-mode-line-format)
+  ;;  (vc-mode vc-mode) "  " minions-mode-line-modes mode-line-misc-info
+  ;;  mode-line-end-spaces)
+
+  ;; (setq-default mode-line-format
+  ;;               '("%e" mode-line-front-space
+  ;;                 (:propertize
+  ;;                  ("" mode-line-mule-info mode-line-client mode-line-modified
+  ;;                   mode-line-remote)
+  ;;                  display (min-width (5.0)))
+  ;;                 mode-line-frame-identification mode-line-buffer-identification "   "
+  ;;                 mode-line-position (vc-mode vc-mode) "  " mode-line-modes
+  ;;                 mode-line-misc-info mode-line-end-spaces))
+
+
+  )
 
 (provide 'core)

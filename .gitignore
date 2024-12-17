@@ -22,3 +22,5 @@ emacs-lsp-booster/*
 places
 todo.org
 snip.el
+.emacs.desktop
+.emacs.desktop.lock

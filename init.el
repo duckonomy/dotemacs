@@ -83,8 +83,8 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
 
 
 (set-face-attribute 'default nil
-		    :weight 'normal
-		    :height 150
+		    :weight 'semibold
+		    :height 120
 		    :slant 'normal
 		    :family "Iosevka")
 (set-face-attribute 'variable-pitch nil

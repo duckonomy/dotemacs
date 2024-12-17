@@ -73,6 +73,11 @@
                    "  ")
 		 cand))))
 
+;; (use-package vertico-posframe
+;;   :ensure t
+;;   :init
+;;   (vertico-posframe-mode 1))
+
 (use-package prescient
   :ensure t)
 
@@ -163,6 +168,10 @@
   ((embark-collect-mode completion-list-mode) . consult-preview-at-point-mode)
   (minibuffer-setup . choose-completion-in-region)
   :config
+  ;; (setq consult-async-input-debounce 0
+  ;;       consult-async-input-throttle 0
+  ;;       consult-async-refresh-delay 0)
+
   (defun choose-completion-in-region ()
     "Use default `completion--in-region' unless we are not completing."
     (when minibuffer-completion-table
