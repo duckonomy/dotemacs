@@ -75,36 +75,36 @@
 
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
   (setq org-capture-templates
-	(quote (("t" "Todo" entry (file "~/Documents/OrgFiles/task.org")
-		 "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-		("r" "Respond" entry (file "~/Documents/OrgFiles/refile.org")
-		 "* Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-		("n" "Note" entry (file "~/Documents/OrgFiles/notes.org")
-		 "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-		("j" "Journal" entry (file+datetree "~/Documents/OrgFiles/journal.org")
-		 "* %?\n%U\n" :clock-in t :clock-resume t)
-		("g" "With Jesus" entry (file+datetree "~/Documents/OrgFiles/withjesus.org")
-		 "* %?\n%U\n" :clock-in t :clock-resume t)
-		("d" "Diary" entry (file+datetree "~/Documents/OrgFiles/diary.org")
-		 "* %?\n%U\n" :clock-in t :clock-resume t)
-		("R" "Refile" entry (file+olp+datetree "~/Documents/OrgFiles/refile.org")
-		 "* TODO Review %A %^G\n%x\n%U\n" :immediate-finish t)
-		("m" "Meeting" entry (file "~/Documents/OrgFiles/refile.org")
-		 "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-		("p" "PDF-Notes" entry (file "~/Documents/OrgFiles/notes.org")
+	    (quote (("t" "Todo" entry (file "~/Documents/OrgFiles/task.org")
+		         "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+		        ("r" "Respond" entry (file "~/Documents/OrgFiles/refile.org")
+		         "* Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+		        ("n" "Note" entry (file "~/Documents/OrgFiles/notes.org")
+		         "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+		        ("j" "Journal" entry (file+datetree "~/Documents/OrgFiles/journal.org")
+		         "* %?\n%U\n" :clock-in t :clock-resume t)
+		        ("g" "With Jesus" entry (file+datetree "~/Documents/OrgFiles/withjesus.org")
+		         "* %?\n%U\n" :clock-in t :clock-resume t)
+		        ("d" "Diary" entry (file+datetree "~/Documents/OrgFiles/diary.org")
+		         "* %?\n%U\n" :clock-in t :clock-resume t)
+		        ("R" "Refile" entry (file+olp+datetree "~/Documents/OrgFiles/refile.org")
+		         "* TODO Review %A %^G\n%x\n%U\n" :immediate-finish t)
+		        ("m" "Meeting" entry (file "~/Documents/OrgFiles/refile.org")
+		         "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+		        ("p" "PDF-Notes" entry (file "~/Documents/OrgFiles/notes.org")
                  "* %?\n%(org-capture-pdf-active-region)\n")
-		("b" "Book" entry (file  "~/Documents/OrgFiles/books.org")
-		 "*  %(let* ((url (substring-no-properties (current-kill 0)))
+		        ("b" "Book" entry (file  "~/Documents/OrgFiles/books.org")
+		         "*  %(let* ((url (substring-no-properties (current-kill 0)))
                   (details (org-books-get-details url)))
                 (when details (apply #'org-books-format 1 details)))")
-		("a" "Appointment" entry (file+olp+datetree "~/Documents/OrgFiles/diary.org")
-		 "* APPT %^{Description} %^g %?\n Added: %U")
-		("c" "Contacts" entry (file+headline "~/Documents/OrgFiles/contacts.org" "")
-		 "* %^{Name} :CONTACT: %[~/Documents/OrgFiles/contacts.txt]")
-		("P" "Protocol" entry (concat org-directory ,(file+headline  "notes.org")
-					      "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?"))
-		("L" "Protocol Link" entry (concat org-directory ,(file+headline  "notes.org")
-						   "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n")))))
+		        ("a" "Appointment" entry (file+olp+datetree "~/Documents/OrgFiles/diary.org")
+		         "* APPT %^{Description} %^g %?\n Added: %U")
+		        ("c" "Contacts" entry (file+headline "~/Documents/OrgFiles/contacts.org" "")
+		         "* %^{Name} :CONTACT: %[~/Documents/OrgFiles/contacts.txt]")
+		        ("P" "Protocol" entry (concat org-directory ,(file+headline  "notes.org")
+					                          "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?"))
+		        ("L" "Protocol Link" entry (concat org-directory ,(file+headline  "notes.org")
+						                           "* %? [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]]\n")))))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -122,80 +122,80 @@
      (sql . t)
      (sqlite . t)))
 
-  ;; (set-face-attribute 'org-block nil :inherit 'fixed-pitch :background "#000000")
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch :background "#000000")
 
+  (set-face-attribute 'org-block-begin-line nil
+                      :inherit 'fixed-pitch
+                      :height 0.9
+                      :overline "#444444"
+                      :background "#000000"
+                      :extend t)
+
+  (set-face-attribute 'org-block-end-line nil
+                      :inherit 'fixed-pitch
+                      :height 0.9
+                      :foreground "#444444"
+                      :background "#000000"
+                      :extend t)
+
+  ;; (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
   ;; (set-face-attribute 'org-block-begin-line nil
   ;;                     :inherit 'fixed-pitch
   ;;                     :height 0.9
-  ;;                     :overline "#444444"
-  ;;                     :background "#000000"
   ;;                     :extend t)
 
   ;; (set-face-attribute 'org-block-end-line nil
   ;;                     :inherit 'fixed-pitch
   ;;                     :height 0.9
-  ;;                     :foreground "#444444"
-  ;;                     :background "#000000"
   ;;                     :extend t)
 
-  ;; ;; (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
-  ;; ;; (set-face-attribute 'org-block-begin-line nil
-  ;; ;;                     :inherit 'fixed-pitch
-  ;; ;;                     :height 0.9
-  ;; ;;                     :extend t)
-
-  ;; ;; (set-face-attribute 'org-block-end-line nil
-  ;; ;;                     :inherit 'fixed-pitch
-  ;; ;;                     :height 0.9
-  ;; ;;                     :extend t)
-
-  ;; (set-face-attribute 'org-date nil :inherit 'fixed-pitch)
-  ;; (require 'org-indent)
-  ;; (set-face-attribute 'org-indent nil :inherit 'fixed-pitch :foreground (face-background 'default))
-  ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-checkbox-statistics-done nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-checkbox-statistics-todo nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-date nil :inherit 'fixed-pitch)
+  (require 'org-indent)
+  (set-face-attribute 'org-indent nil :inherit 'fixed-pitch :foreground (face-background 'default))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-checkbox-statistics-done nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-checkbox-statistics-todo nil :inherit 'fixed-pitch)
 
 
-  ;; (set-face-attribute 'org-code nil :inherit 'fixed-pitch :background "#333333")
-  ;; ;; (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit 'fixed-pitch :background "#333333")
+  ;; (set-face-attribute 'org-code nil :inherit 'fixed-pitch)
 
-  ;; (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch :height 0.9)
-  ;; (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-  ;; (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch :foreground "#e6e147")
-  ;; (set-face-attribute 'org-headline-done nil :foreground "#585c60")
-  ;; (set-face-attribute 'org-done nil :foreground "#585c60")
-  ;; (set-face-attribute 'org-todo nil :foreground "#ffa3a3" :background "#745050")
-  ;; (set-face-attribute 'org-link nil :foreground "#a2b9d9" :underline t)
-  ;; (set-face-attribute 'org-document-title nil :height 1.3 :weight 'bold :foreground "#888888")
-  ;; ;; (set-face-attribute 'org-document-title nil :height 1.3 :weight 'bold)
-  ;; ;; (set-face-attribute 'org-modern-label nil :box (:color "#222222" :line-width (0 . -1)))
+  (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-document-info-keyword nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-meta-line nil :inherit 'fixed-pitch :height 0.9)
+  (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-verbatim nil :inherit 'fixed-pitch :foreground "#e6e147")
+  (set-face-attribute 'org-headline-done nil :foreground "#585c60")
+  (set-face-attribute 'org-done nil :foreground "#585c60")
+  (set-face-attribute 'org-todo nil :foreground "#ffa3a3" :background "#745050")
+  (set-face-attribute 'org-link nil :foreground "#a2b9d9" :underline t)
+  (set-face-attribute 'org-document-title nil :height 1.3 :weight 'bold :foreground "#888888")
+  ;; (set-face-attribute 'org-document-title nil :height 1.3 :weight 'bold)
+  ;; (set-face-attribute 'org-modern-label nil :box (:color "#222222" :line-width (0 . -1)))
 
-  ;; (set-face-attribute 'org-level-1 nil :foreground "#4fb87f" :height 1.2)
-  ;; (set-face-attribute 'org-level-2 nil :foreground "#4fb87f" :height 1.2)
-  ;; (set-face-attribute 'org-level-3 nil :foreground "#4fb87f" :height 1.1)
-  ;; (set-face-attribute 'org-level-4 nil :foreground "#4fb87f" :height 1.1)
-  ;; (set-face-attribute 'org-level-5 nil :foreground "#4fb87f" :height 1.1)
-  ;; (set-face-attribute 'org-level-6 nil :foreground "#4fb87f" :height 1.1)
-  ;; (set-face-attribute 'org-level-7 nil :foreground "#4fb87f" :height 1.1)
-  ;; (set-face-attribute 'org-level-8 nil :foreground "#4fb87f" :height 1.1)
+  (set-face-attribute 'org-level-1 nil :foreground "#4fb87f" :height 1.1)
+  (set-face-attribute 'org-level-2 nil :foreground "#4fb87f" :height 1.1)
+  (set-face-attribute 'org-level-3 nil :foreground "#4fb87f" :height 1.0)
+  (set-face-attribute 'org-level-4 nil :foreground "#4fb87f" :height 1.0)
+  (set-face-attribute 'org-level-5 nil :foreground "#4fb87f" :height 1.0)
+  (set-face-attribute 'org-level-6 nil :foreground "#4fb87f" :height 1.0)
+  (set-face-attribute 'org-level-7 nil :foreground "#4fb87f" :height 1.0)
+  (set-face-attribute 'org-level-8 nil :foreground "#4fb87f" :height 1.0)
 
-  ;; (set-face-attribute 'mode-line nil :background "#2A2A2A" :box '(:color "#2a2a2a" :line-width 5))
-  ;; (set-face-attribute 'mode-line-inactive nil :background "#202020" :box '(:color "#202020" :line-width 5))
+  (set-face-attribute 'mode-line nil :background "#2A2A2A" :box '(:color "#2a2a2a" :line-width 5))
+  (set-face-attribute 'mode-line-inactive nil :background "#202020" :box '(:color "#202020" :line-width 5))
 
-  ;; (set-face-attribute 'tab-bar nil
-  ;;                     :background "#2a2a2a"
-  ;;                     :box '(:color "#2a2a2a" :line-width 1))
-  ;; (set-face-attribute 'tab-bar-tab nil
-  ;;                     :background "#2a2a2a"
-  ;;                     :box '(:color "#444444" :line-width 1))
-  ;; (set-face-attribute 'tab-bar-tab-inactive nil
-  ;;                     :background "#202020"
-  ;;                     :box '(:color "#333333" :line-width 1))
+  (set-face-attribute 'tab-bar nil
+                      :background "#2a2a2a"
+                      :box '(:color "#2a2a2a" :line-width 1))
+  (set-face-attribute 'tab-bar-tab nil
+                      :background "#2a2a2a"
+                      :box '(:color "#444444" :line-width 1))
+  (set-face-attribute 'tab-bar-tab-inactive nil
+                      :background "#202020"
+                      :box '(:color "#333333" :line-width 1))
   :custom
   (org-ellipsis "…")
   (org-src-preserve-indentation t)

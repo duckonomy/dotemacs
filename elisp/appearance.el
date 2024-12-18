@@ -8,13 +8,22 @@
   :ensure t
   :config
   (load-theme 'doom-tomorrow-night t)
-  (set-face-attribute 'tab-bar-tab nil :foreground (face-background 'mode-line-active) :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (10 . 10)))
-  (set-face-attribute 'tab-bar-tab-inactive nil :foreground "#777777" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
-  (set-face-attribute 'tab-bar nil :inherit 'fixed-pitch :foreground "#aaaaaa" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'tab-bar-tab nil :foreground (face-background 'mode-line-active) :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'tab-bar-tab-inactive nil :foreground "#777777" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'tab-bar nil :inherit 'fixed-pitch :foreground "#aaaaaa" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
 
-  (set-face-attribute 'mode-line nil :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (10 . 10)))
-  (set-face-attribute 'mode-line-inactive nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
-  (set-face-attribute 'mode-line-active nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'mode-line nil :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'mode-line-inactive nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  ;; (set-face-attribute 'mode-line-active nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (10 . 10)))
+  (set-face-attribute 'default nil :background "#191919")
+  (set-face-attribute 'tab-bar-tab nil :foreground (face-background 'mode-line-active) :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+  (set-face-attribute 'tab-bar-tab-inactive nil :foreground "#777777" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+  (set-face-attribute 'tab-bar nil :inherit 'fixed-pitch :foreground "#aaaaaa" :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+
+  (set-face-attribute 'mode-line nil :background (face-background 'default)  :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+  (set-face-attribute 'mode-line-inactive nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+  (set-face-attribute 'mode-line-active nil :background (face-background 'default) :box `(:color ,(face-background 'default) :line-width (5 . 5)))
+  (set-face-attribute 'default nil :background "#151515")
   )
 (use-package mindre-theme
   :ensure t
@@ -40,8 +49,8 @@
                         :box `(:color ,(face-background 'default) :line-width (10 . 10)))
     )
   )
-  ;; :config
-  ;; (load-theme 'mindre t))
+;; :config
+;; (load-theme 'mindre t))
 
 ;; (use-package no-clown-fiesta-theme
 ;;   :ensure (:host github :repo "emacsmirror/no-clown-fiesta-theme")
@@ -78,7 +87,7 @@
 
 
 
-  ;; )
+;; )
 
 (use-package minions
   :ensure t

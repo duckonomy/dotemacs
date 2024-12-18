@@ -83,24 +83,24 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
 
 
 (set-face-attribute 'default nil
-		    :weight 'semibold
-		    :height 120
-		    :slant 'normal
-		    :family "Iosevka")
+		            :weight 'semibold
+		            :height 120
+		            :slant 'normal
+		            :family "Iosevka")
 (set-face-attribute 'variable-pitch nil
-		    :weight 'normal
-		    :height 1.0
-		    :slant 'normal
-		    :family "Lexend")
+		            :weight 'normal
+		            :height 1.0
+		            :slant 'normal
+		            :family "Lexend")
 (set-face-attribute 'fixed-pitch nil
-		    :weight 'normal
-		    :height 1.0
-		    :slant 'normal
-		    :family "Iosevka")
+		            :weight 'normal
+		            :height 1.0
+		            :slant 'normal
+		            :family "Iosevka")
 (set-fontset-font t 'hangul
-	 	  (font-spec
-	 	   :name "Noto Sans CJK KR"
-	 	   :weight 'bold))
+	 	          (font-spec
+	 	           :name "Noto Sans CJK KR"
+	 	           :weight 'bold))
 
 (defun duckonomy/keys-decode (&optional frame)
   (when frame
@@ -132,9 +132,9 @@ Set DEBUG=1 in the command line or use --debug-init to enable this.")
 (if (daemonp)
     (progn
       (add-hook 'after-make-frame-functions
-		(lambda (frame)
-		  (with-selected-frame frame
-		    (duckonomy/keys-decode))))))
+		        (lambda (frame)
+		          (with-selected-frame frame
+		            (duckonomy/keys-decode))))))
 (duckonomy/keys-decode)
 
 

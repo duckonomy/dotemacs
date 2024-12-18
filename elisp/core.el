@@ -24,7 +24,6 @@
   (setq-default tab-width 4)
   (setq-default javascript-indent-level 2)
   (setq-default js-indent-level 2)
-  (setq-default go-ts-mode-indent-offset)
   (setq-default js2-basic-offset 2)
   (setq-default web-mode-markup-indent-offset 2)
   (setq-default web-mode-css-indent-offset 2)

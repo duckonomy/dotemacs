@@ -35,6 +35,14 @@
       (unless (apply 'derived-mode-p disabled-modes)
         (eglot-ensure))))
 
+  (defun duck/go-eglot-start()
+    (define-key go-ts-mode-map
+                ["RET"] 'newline-and-indent)
+    (define-key go-ts-mode-map
+                ["M-RET"] 'newline)
+    (eglot-ensure))
+
+
   :bind (:map eglot-mode-map
               ("C-c e r" . eglot-rename)
               ("C-c e f f" . eglot-format)
@@ -72,7 +80,6 @@
    (c-ts-mode . eglot-ensure)
    (c++-ts-mode . eglot-ensure)
    (tsx-ts-mode . eglot-ensure)
-   (go-ts-mode . eglot-ensure)
    (nix-mode . eglot-ensure)
    ;; (astro-ts-mode . eglot-ensure)
    (java-ts-mode . eglot-ensure)))
@@ -128,6 +135,25 @@
   :config
   (apheleia-global-mode +1))
 
+(use-package go-ts-mode
+  :ensure nil
+  :mode "\\.go\\'"
+  :bind
+  (:map go-ts-mode-map
+        ("C-c g a" . treesit-beginning-of-defun)
+        ("C-c g e" . treesit-end-of-defun)
+        ("C-c g i" . prog-indent-sexp)
+        ("RET"     . newline-and-indent)
+        ("M-RET"   . newline)
+        )
+  :custom
+  (go-ts-mode-indent-offset 4)
+  :config
+  (add-to-list 'exec-path "~/.local/bin")
+  :hook
+  (go-ts-mode . eglot-ensure))
 
+(use-package godoctor
+  :ensure t)
 
 (provide 'lsp-programming)
